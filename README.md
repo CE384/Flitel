@@ -1,3 +1,3 @@
 # Database Course Project
-## Implementation of a Airline-Hotel Reservation System
+### Implementation of an Airline-Hotel Reservation System
 Saba Hashemi, Kimia Noorbakhsh
