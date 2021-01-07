@@ -2,10 +2,10 @@ import bcrypt
 from db import get_user, add_customer
 
 def get_hashed_password(password):
-	return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+	return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
 def check_password(plain_password, hashed_password):
-	return bcrypt.checkpw(plain_password.encode(), hashed_password.encode())
+	return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 def login_user(username, password):
 	user = get_user(username)

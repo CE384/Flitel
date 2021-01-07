@@ -15,7 +15,6 @@ def config(filename="database.ini", section="postgresql"):
 	return db_params
 
 def add_customer(customer):
-	print(customer)
 	try:
 		params = config()
 		connection = psycopg2.connect(**params)
@@ -24,12 +23,8 @@ def add_customer(customer):
 			values('customer', '{customer['username']}', '{customer['password']}')
 			RETURNING id; """
 
-
-			print(insert_user)
 			cursor.execute(insert_user)
 			id_of_new_row = cursor.fetchone()[0]
-
-			print(id_of_new_row)
 
 			insert_customer = f"""insert into customer (id, national_id, name, email, phone, address) 
 			values({id_of_new_row}, '{customer['national_id']}', '{customer['name']}', '{customer['email']}',
@@ -40,9 +35,25 @@ def add_customer(customer):
 		connection.commit()
 	except Exception as e:
 		print(e)
-		return "User cannot be created"
+		return e
 
 	return None
 
 def get_user(username):
-	pass
+	user = None
+	try:
+		params = config()
+		connection = psycopg2.connect(**params)
+		with connection.cursor() as cursor:
+			query = f"""select * from user_table where username='{username}'"""
+			
+			cursor.execute(query)
+			result = cursor.fetchall()
+			if result:
+				user = {'username': username, 'password' : result[0][3]}
+			print(user)
+	except Exception as e:
+		print(e)
+		return e
+
+	return user
