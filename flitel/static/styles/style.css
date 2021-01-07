@@ -18,3 +18,24 @@ a{
 #navbar a:hover{
 	text-decoration: underline;
 }
+
+.container{
+	padding: 10px;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: space-around;
+}
+
+.flex_col{
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+}
+
+input,button,p,div,a,textarea {
+	padding: 5px;
+	margin: 5px;
+}

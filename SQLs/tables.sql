@@ -16,8 +16,8 @@ create table city(
 
 create table user_table (
 	id 				serial,
-	type 			varchar(8) not null check (
-		type in ('customer', 'airline', 'hotel')
+	type_ 			varchar(8) not null check (
+		type_ in ('customer', 'airline', 'hotel')
 	),
 	username 		varchar(20) not null unique,
 	password 		varchar(64) not null,
@@ -25,7 +25,7 @@ create table user_table (
 	primary key (id)
 );
 
-create table costumer (
+create table customer (
 	id 				integer,
 	national_id 	varchar(20) not null unique check (national_id ~ '^[0-9]+$'),
 	name		varchar(60) not null,
@@ -70,7 +70,7 @@ create table hotel (
 create table room(
 	hotel_id 		integer,
 	number 			integer not null,
-	type 			varchar(5) check (type in ('1 bed', '2 beds', 'suite')),
+	type_ 			varchar(5) check (type_ in ('1 bed', '2 beds', 'suite')),
 	capacity 		integer check (capacity >= 0),
 	price 			integer check (price >= 0),
 	
@@ -80,7 +80,7 @@ create table room(
 create table flight (
 	airline_id 					integer,
 	number 						integer not null,
-	type 						varchar(11) check (type in ('buisiness', 'economy', 'first class')),
+	type_ 						varchar(11) check (type_ in ('buisiness', 'economy', 'first class')),
 	capacity 					integer check (capacity >= 0),
 	price 						integer check (price >= 0),
 	origin_country_code 		integer,
@@ -109,13 +109,13 @@ create table booking(
 	id 					serial,
 	submission_date 	date,
 	transaction_date 	date,
-	status 				varchar(20) check (
-		status in ('completed', 'cancelled', 'waiting for payment')
+	status_ 				varchar(20) check (
+		status_ in ('completed', 'cancelled', 'waiting for payment')
 	),
 	transaction_amount 	integer,
-	costumer_id 		integer not null,
+	customer_id 		integer not null,
 	
-	foreign key (costumer_id) references costumer(id),
+	foreign key (customer_id) references customer(id),
 	primary key (id)
 );
 

@@ -9,7 +9,7 @@ create view hotels_info
 
 
 create view hotels_rooms 
-    as select hotel.name as hotel_name, hotel.id, room.number, type, capacity, price
+    as select hotel.name as hotel_name, hotel.id, room.number, type_, capacity, price
     from hotel join room on hotel.id = room.hotel_id;
 
 
@@ -25,19 +25,19 @@ create view flight_info
 
 
 create view airline_bookings_status
-    as select costumer.name, FI.number, FI.origin_city_name, FI.origin_country_name,
+    as select customer.name, FI.number, FI.origin_city_name, FI.origin_country_name,
     FI.destination_city_name, FI.destination_country_name, FI.departure_date,
-    FI.departure_time, status, transaction_date, transaction_amount
-    from booking join costumer on booking.costumer_id = costumer.id
+    FI.departure_time, status_, transaction_date, transaction_amount
+    from booking join customer on booking.customer_id = customer.id
     join (flight_booking as FB join flight_info as FI
         on FB.airline_id = FI.airline_id and FB.flight_number = FI.number)
         on booking.id = FB.id ;
 
 
 create view hotel_bookings_status
-    as select costumer.name, RB.hotel_id, RB.room_number, RB.from_date, RB.to_date, 
-    status, transaction_date, transaction_amount
-    from booking join costumer on booking.costumer_id = costumer.id
+    as select customer.name, RB.hotel_id, RB.room_number, RB.from_date, RB.to_date, 
+    status_, transaction_date, transaction_amount
+    from booking join customer on booking.customer_id = customer.id
     join (room_booking as RB join room 
         on RB.hotel_id = room.hotel_id and RB.room_number = room.number)
     on booking.id = RB.id;

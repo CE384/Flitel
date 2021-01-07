@@ -14,21 +14,35 @@ def config(filename="database.ini", section="postgresql"):
 		raise Exception("section {} not found".format(section))
 	return db_params
 
-
-def example():
-	query = '''SELECT * FROM discount'''
-
-	connection = None
+def add_customer(customer):
+	print(customer)
 	try:
 		params = config()
 		connection = psycopg2.connect(**params)
 		with connection.cursor() as cursor:
-			cursor.execute(query)
-			discounts = cursor.fetchall()
-			print(discounts)
+			insert_user = f"""insert into user_table (type_, username, password) 
+			values('customer', '{customer['username']}', '{customer['password']}')
+			RETURNING id; """
 
-		# if performing changes this line is needed:
-		# connection.commit()
-	finally:
-		if connection is not None:
-			connection.close()
+
+			print(insert_user)
+			cursor.execute(insert_user)
+			id_of_new_row = cursor.fetchone()[0]
+
+			print(id_of_new_row)
+
+			insert_customer = f"""insert into customer (id, national_id, name, email, phone, address) 
+			values({id_of_new_row}, '{customer['national_id']}', '{customer['name']}', '{customer['email']}',
+			 '{customer['phone']}', '{customer['address']}'); """
+			
+			cursor.execute(insert_customer)
+
+		connection.commit()
+	except Exception as e:
+		print(e)
+		return "User cannot be created"
+
+	return None
+
+def get_user(username):
+	pass
