@@ -30,7 +30,7 @@ create table costumer (
 	national_id 	varchar(20) not null unique check (national_id ~ '^[0-9]+$'),
 	first_name		varchar(30) not null,
 	last_name 		varchar(30) not null,
-	address 		varchar(100),
+	address 		varchar(150),
 	phone 			varchar(20) check (phone ~ '^[0-9]+$'),
 	email 			varchar(100) check (
 		email ~ '^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
@@ -43,7 +43,7 @@ create table costumer (
 create table airline (
 	id 				integer,
 	name 			varchar(30) not null unique,
-	description 	varchar(100),
+	description 	text,
 
 	foreign key (id) references user_table(id),
 	primary key (id)
@@ -52,10 +52,10 @@ create table airline (
 create table hotel (
 	id 				integer,
 	name 			varchar(30) not null unique,
-	description 	varchar(100),
+	description 	text,
 	phone 			varchar(20) check (phone ~ '^[0-9]+$'),
-	facilities 		varchar(100),
-	address 		varchar(100),
+	facilities 		text,
+	address 		varchar(150),
 	website 		varchar(100),
 	stars_count 	integer check (
 		stars_count >= 1 and stars_count <= 5
@@ -98,7 +98,7 @@ create table flight (
 );
 
 create table discount(
-	id 		integer,
+	id 		varchar(10),
 	percent	integer not null check (
 		percent >= 0 and percent <= 100
 	),
@@ -122,7 +122,7 @@ create table booking(
 
 create table book_discount(
 	booking_id 		integer,
-	discount_id 	integer,
+	discount_id 	varchar(10),
 
 	foreign key (booking_id) references booking(id),
 	foreign key (discount_id) references discount(id),
