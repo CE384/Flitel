@@ -28,8 +28,7 @@ create table user_table (
 create table costumer (
 	id 				integer,
 	national_id 	varchar(20) not null unique check (national_id ~ '^[0-9]+$'),
-	first_name		varchar(30) not null,
-	last_name 		varchar(30) not null,
+	name		varchar(60) not null,
 	address 		varchar(150),
 	phone 			varchar(20) check (phone ~ '^[0-9]+$'),
 	email 			varchar(100) check (

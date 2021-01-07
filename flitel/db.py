@@ -16,8 +16,7 @@ def config(filename="database.ini", section="postgresql"):
 
 
 def example():
-	query = \
-	'''SELECT * FROM discount'''
+	query = '''SELECT * FROM discount'''
 
 	connection = None
 	try:
