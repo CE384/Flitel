@@ -50,10 +50,93 @@ def get_user(username):
 			cursor.execute(query)
 			result = cursor.fetchall()
 			if result:
-				user = {'username': username, 'password' : result[0][3]}
+				user = {'username': username, 'type': result[0][1], 'password' : result[0][3]}
 			print(user)
 	except Exception as e:
 		print(e)
 		return e
 
 	return user
+
+
+def get_hotels():
+	hotels = []
+	try:
+		params = config()
+		connection = psycopg2.connect(**params)
+		with connection.cursor() as cursor:
+			query = f"""select name, id, city_name, country_name, stars_count from hotels_info;"""
+			
+			cursor.execute(query)
+			results = cursor.fetchall()
+			for r in results:
+				hotel = {
+					'name': r[0],
+					'id': r[1],
+					'city_name': r[2],
+					'country_name': r[3],
+					'stars_count': r[4]
+				}
+				hotels.append(hotel)
+	except Exception as e:
+		print(e)
+		return e
+
+	return hotels
+
+def get_hotel(hotel_id):
+	hotel = None
+	try:
+		params = config()
+		connection = psycopg2.connect(**params)
+		with connection.cursor() as cursor:
+
+			query = f"""select name, description, phone, website, address, facilities, stars_count, country_name, city_name, id
+			from hotels_info natural join hotel where id = {hotel_id};"""
+			
+			cursor.execute(query)
+			r = cursor.fetchone()
+			if r:
+				hotel = {
+					'name': r[0],
+					'description': r[1],
+					'phone': r[2],
+					'website': r[3],
+					'address': r[4],
+					'facilities': r[5],
+					'stars_count': r[6],
+					'country_name': r[7],
+					'city_name': r[8],
+					'id': r[9]
+				}
+
+	except Exception as e:
+		print(e)
+		return e
+
+	return hotel
+
+def get_rooms(hotel_id):
+	rooms = []
+	try:
+		params = config()
+		connection = psycopg2.connect(**params)
+		with connection.cursor() as cursor:
+			query = f"""select number, type_, capacity, price from hotels_rooms
+			where id = {hotel_id};"""
+			
+			cursor.execute(query)
+			results = cursor.fetchall()
+			for r in results:
+				room = {
+					'number': r[0],
+					'type': r[1],
+					'capacity': r[2],
+					'price': r[3]
+				}
+				rooms.append(room)
+	except Exception as e:
+		print(e)
+		return e
+	print(rooms)
+	return rooms

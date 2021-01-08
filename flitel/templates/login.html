@@ -1,8 +1,14 @@
 {% extends "base.html" %} 
 
 {% block content %}
-<div class="flex_col">
-<form method="post" class="flex_col">
+
+<div class="flex-col">
+<form method="post" class="flex-col">
+  <input
+    type="hidden"
+    name="next"
+    value="{{ request.args.get('next', '') }}"
+/>
   <input name="username" placeholder="username" type="text" />
   <input name="password" placeholder="password" type="password" />
   <input name="Submit" type="submit">

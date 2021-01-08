@@ -1,41 +1,82 @@
 body {
-	font-family: Helvetica, Arial;
-	margin: auto;
+  font-family: Helvetica, Arial;
+  margin: auto;
+  background-color: rgb(33, 40, 105);
+  color: white;
 }
 
 #navbar {
-	padding: 10px;
-	display: flex;
-	flex-direction: row;
-	align-content: center;
-	justify-content: space-between;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
 }
 
-a{
-	text-decoration: none;
+a {
+  text-decoration: none;
+  color: rgb(116, 227, 255);
 }
 
-#navbar a:hover{
-	text-decoration: underline;
+#navbar a:hover {
+  text-decoration: underline;
 }
 
-.container{
-	padding: 10px;
-	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
-	justify-content: space-around;
+.container {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-around;
 }
 
-.flex_col{
-	display: flex;
-	flex-direction: column;
-	align-content: center;
-	align-items: center;
-	justify-content: center;
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
-input,button,p,div,a,textarea {
-	padding: 5px;
-	margin: 5px;
+input,
+button,
+p,
+div,
+a,
+textarea {
+  padding: 5px;
+  margin: 5px;
+}
+
+
+table.table1 {
+  border-collapse: collapse;
+  width: 80%;
+  background-color: rgb(203, 226, 255);
+  color: black;
+}
+
+table.table1 a {
+	color: blue;
+}
+
+table.table1 td,
+table.table1 th {
+  border: 1px solid black;
+  text-align: center;
+  padding: 15px;
+}
+
+table.table1 tr:nth-child(even) {
+	background-color: #c6d5ff;
+}
+
+table.table1 tr.header {
+	color: white;
+	background-color: hsl(226, 28%, 30%);
+}
+
+#hotel-info label{
+	font-weight: bold;
+	color: #c6d5ff;
 }
