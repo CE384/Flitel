@@ -26,7 +26,7 @@ create table user_table (
 );
 
 create table customer (
-	id 				integer,
+	id 				serial,
 	national_id 	varchar(20) not null unique check (national_id ~ '^[0-9]+$'),
 	name		varchar(60) not null,
 	address 		varchar(150),
@@ -40,7 +40,7 @@ create table customer (
 );
 
 create table airline (
-	id 				integer,
+	id 				serial,
 	name 			varchar(30) not null unique,
 	description 	text,
 
@@ -49,7 +49,7 @@ create table airline (
 );
 
 create table hotel (
-	id 				integer,
+	id 				serial,
 	name 			varchar(30) not null unique,
 	description 	text,
 	phone 			varchar(20) check (phone ~ '^[0-9]+$'),
@@ -61,7 +61,6 @@ create table hotel (
 	),
 	country_code 	integer not null,
 	city_code 		integer not null,
-	location 		point,
 
 	foreign key (id) references user_table(id),
 	foreign key (country_code, city_code) references city(country_code, code),
