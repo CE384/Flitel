@@ -61,6 +61,7 @@ create table hotel (
 	),
 	country_code 	integer not null,
 	city_code 		integer not null,
+	location		point,
 
 	foreign key (id) references user_table(id),
 	foreign key (country_code, city_code) references city(country_code, code),
@@ -69,7 +70,7 @@ create table hotel (
 create table room(
 	hotel_id 		integer,
 	number 			integer not null,
-	type_ 			varchar(5) check (type_ in ('1 bed', '2 beds', 'suite')),
+	type_ 			varchar(6) check (type_ in ('1 bed', '2 beds', 'suite')),
 	capacity 		integer check (capacity >= 0),
 	price 			integer check (price >= 0),
 	

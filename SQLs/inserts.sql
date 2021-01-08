@@ -38,49 +38,58 @@ insert into airline values (14, 'turkish airlines', 'Turkish Airlines is the nat
 insert into airline values (15, 'united airlines', 'United Airlines, Inc. is a major American airline headquartered at Willis Tower in Chicago, Illinois.');
 insert into airline values (16, 'british airways', 'British Airways is the flag carrier airline of the United Kingdom.');
 
-insert into hotel values (3,
+
+insert into hotel (id, name, description, phone, facilities, address, website, stars_count, country_code, city_code) values 
+						(3,
 						  'espinas palace',
 						  'The 5-Star Epinas Palace Hotel located in the best residential and commercial part of Tehran, Iran.',
 						 '982175675000', 
 						 'Espinas Palace Hotel is a hotel with a flair for services. A stay in the Palace is always a special time for our guests. The Palace features all the amenities and services of a luxury five-star hotel coupled with attraction and a unique feel-at-home atmosphere',
 						 'Tehran, Iran', 'https://espinashotels.com/', 5, 1, 1);
-insert into hotel values (4,
+insert into hotel (id, name, description, phone, facilities, address, website, stars_count, country_code, city_code) values 
+						(4,
 						  'almas',
 						  'The 4-Star Almas Hotel in Mashhad-Iran incorporating luxury and elegance Opened in March 2017.',
 						 '985131414000', 
 						 ' Lobby, Lobby lounge, Coffee Shop Firoozeh Restaurant, Panorama Revolving Rooftop Restaurant Roof Garden Restaurant & Café.',
 						 'Mashhad, Iran', '', 4, 1, 2);						 
-insert into hotel values (5,
+insert into hotel (id, name, description, phone, facilities, address, website, stars_count, country_code, city_code) values 
+						 (5,
 						  'marmara deluxe hotel',
 						  'Hotel Istanbul is in the middle of the historical Sultanahmet area.',
 						 '902125202777', 
 						 'Marmara Deluxe Hotel has a very special location, in the middle of the historical peninsula (half-island) that makes the cultures & religions meet, where the Asia and Europe greet each other and also a location that available to go by foot to the most important places that visitors of Istanbul have to visit firstly.',
 						 'Istanbul, Turkey', 'http://www.marmarahoteldeluxe.com/', 3, 2, 1);					 
-insert into hotel values (6,
+insert into hotel (id, name, description, phone, facilities, address, website, stars_count, country_code, city_code) values 
+				(6,
 						  'Metropolitan Hotel Ankara',
 						  '5 HRS Stars Metropolitan Hotels Ankara in Ankara (Ankara)',
 						 '903122954545', 
 						 'Located in the city center of Ankara, Metropolitan Hotels Ankara offers modern rooms with luxury design, soundproofing, and air conditioning. The hotel has free private parking on site.',
 						 'Ankara, Turkey', '', 5, 2, 2);						 
-insert into hotel values (7,
+insert into hotel (id, name, description, phone, facilities, address, website, stars_count, country_code, city_code) values 
+						(7,
 						  'Grand Hyatt Washington',
 						  'Grand Hyatt Washington places you in the heart of Washington, D.C.',
 						 '12025821234', 
 						 'The WMATA Metro Center train station is directly connected to our lobby, so you can board the red, orange, silver, or blue line and easily navigate the city.',
 						 'Washington, USA', 'https://www.hyatt.com/', 4, 3, 1);						 
-insert into hotel values (8,
+insert into hotel (id, name, description, phone, facilities, address, website, stars_count, country_code, city_code) values 
+					 (8,
 						  'The Langham',
 						  'Chic contemporary style that inspires. Ultimate location on Fifth Avenue. Personalised service that is genuine. Culinary delights that captivate. A stay at The Langham, New York, Fifth Avenue is unlike any other.',
 						 '12126954005', 
 						 'Contemporary luxury. Urban sophistication. 234 residentially-styled guest rooms and suites designed to relax, inspire, and surprise. Each furnished with indulgent amenities such as Swedish Duxiana beds and large marble-clad bathrooms with rainfall showers. Many  highlighted by views of the iconic Manhattan skyline that is framed by the oversized glass windows.',
 						 'New York, USA', 'https://www.langhamhotels.com/', 5, 3, 2);					 
-insert into hotel values (9,
+insert into hotel (id, name, description, phone, facilities, address, website, stars_count, country_code, city_code) values 
+					(9,
 						  'Bond Place Hotel Toronto',
 						  'At the foot of Yonge and Dundas square, stationed in the center of Toronto’s playground.',
 						 '14163626061', 
 						 'ount sheep in our beautifully curated rooms. Plot your next adventure from our bright and social lobby. Submerse yourself in Toronto life from our convenient location.',
 						 'Toronto, Canada', 'https://www.bondplace.ca/the-hotel/', 3, 4, 1);				 
-insert into hotel values (10,
+insert into hotel (id, name, description, phone, facilities, address, website, stars_count, country_code, city_code) values 
+						(10,
 						  'Blakemore Hyde Park Hotel',
 						  'The Blakemore Hyde Park, A cosmopolitan four-star London hotel',
 						 '14163626061', 
