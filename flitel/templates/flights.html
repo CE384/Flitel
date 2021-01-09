@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+
+{% block content %}
+<h2> Flights </h2>
+<table class="table1">
+    <tr class="header">
+        <th>Airline</th>
+        <th>Number</th>
+        <th>Departure Date</th>
+        <th>Origin</th>
+        <th>Destination</th>
+        <th>Price</th>
+    </tr>
+{% for flight in flights %}
+
+<tr>
+     <th><a href="flights/{{flight.id}}">{{flight.airline_name}}</a></th>
+     <th>{{flight.number}}</th>
+     <th>{{flight.departure_date}}</th>
+     <th>{{flight.origin_city_name}}, {{flight.origin_country_name}}</th>
+     <th>{{flight.destination_city_name}}, {{flight.destination_country_name}}</th>
+     <th>{{flight.price}}$</th>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

@@ -1,7 +1,7 @@
 from flask import Flask, session, redirect, url_for, request, render_template, abort, flash
 
 from utils import login_user, register_customer
-from db import get_hotels, get_hotel, get_rooms
+from db import get_flights, get_hotels, get_hotel, get_rooms
 
 
 app = Flask(__name__)
@@ -130,4 +130,12 @@ def reserve_room(hotel_id, room_number):
 
 	# todotodotodo
 	return render_template('hotel_info.html', username=session_username)
+
+### Flight views ###
+@app.route('/flights', methods=["GET"])
+def flights():
+	flights = get_flights()
+	session_username = session.get('username')
+
+	return render_template('flights.html', flights=flights, username=session_username)
 

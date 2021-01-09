@@ -140,3 +140,33 @@ def get_rooms(hotel_id):
 		return e
 	print(rooms)
 	return rooms
+
+def get_flights():
+	flights = []
+	try:
+		params = config()
+		connection = psycopg2.connect(**params)
+		with connection.cursor() as cursor:
+			query = f"""select airline_name, airline_id, number, price, departure_date,
+			origin_city_name, origin_country_name, destination_city_name, destination_country_name from flight_info;"""
+			
+			cursor.execute(query)
+			results = cursor.fetchall()
+			for r in results:
+				flight = {
+					'airline_name': r[0],
+					'airline_id': r[1],
+					'number': r[2],
+					'price': r[3],
+					'departure_date': r[4],
+					'origin_city_name': r[5],
+					'origin_country_name': r[6],
+					'destination_city_name': r[7],
+					'destination_country_name': r[8]
+				}
+				flights.append(flight)
+	except Exception as e:
+		print(e)
+		return e
+
+	return flights
