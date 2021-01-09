@@ -80,3 +80,33 @@ table.table1 tr.header {
 	font-weight: bold;
 	color: #c6d5ff;
 }
+
+
+.form1{
+  display: flex;
+  flex-direction: column;
+  align-content: left;
+  align-items: left;
+  justify-content: left;
+  padding: 0 40px 0 40px;
+  /* width: 40%; */
+}
+
+.form1 .field {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  
+  width: 100%;
+  padding: 10px;
+}
+
+.form1 .submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+}

@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block content %}
+
+<form method="post" class="form1">
+    <div class="field">
+    <label>from:</label>
+    <input name="from_date" placeholder="from date" type="date"  required/>
+    </div>
+    <div class="field">
+    <label>To:</label>
+    <input name="to_date" placeholder="to date" type="date" required/>
+    </div>
+    <div class="field">
+        <label>Password:</label>
+    <input name="password" placeholder="password" type="password" required />
+    </div>
+    <div class="submit">
+    <input name="Submit" type="submit" />
+    </div>
+</form>
+{% if error != None %}
+<div class="error">{{error}}</div>
+
+
+{% endif %} {% endblock %}

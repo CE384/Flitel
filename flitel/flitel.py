@@ -1,8 +1,8 @@
 from flask import Flask, session, redirect, url_for, request, render_template, abort, flash
+from functools import wraps
 
-from utils import login_user, register_customer
 from db import get_flights, get_hotels, get_hotel, get_rooms
-
+import utils
 
 app = Flask(__name__)
 app.secret_key = b'dklsdjf@#423f8_#942;3['
@@ -32,6 +32,15 @@ def add_header(r):
 	r.headers['Cache-Control'] = 'public, max-age=0'
 	return r
 
+def login_required(f):
+	@wraps(f)
+	def decorated_function(*args, **kwargs):
+		session_username = 	session.get('username')
+		if session_username is None:
+			return redirect(url_for('login', next=request.url))
+		return f(*args, **kwargs)
+	return decorated_function
+
 ### Auth views ###
 
 @app.route('/logout')
@@ -52,7 +61,7 @@ def login():
 		password = request.form.get("password", "")
 		next_url = request.form.get("next")
 		try:
-			login_user(username, password)
+			utils.login_user(username, password)
 			session['username'] = username
 			print(next_url)
 			if next_url:
@@ -80,7 +89,7 @@ def register():
 		phone = request.form.get("phone", None)
 		email = request.form.get("email", None)
 		try:
-			error = register_customer({
+			error = utils.register_customer({
 				'username':username,
 				'password':password,
 				'national_id':national_id,
@@ -91,7 +100,6 @@ def register():
 				})
 
 			if not error:
-				print(username)
 				session['username'] = username
 				return redirect(url_for('home'))
 		except ValueError as err:
@@ -120,18 +128,38 @@ def hotel(id):
 
 
 @app.route('/hotels/<int:hotel_id>/room/<int:room_number>', methods=["GET", "POST"])
+@login_required
 def reserve_room(hotel_id, room_number):
 	session_username = session.get('username')
-	if not session_username:
-		print(request.endpoint)
-		flash("You have to be logged in to access this page.")
-		return redirect(url_for('login', next=request.url))
+	
+	error = None
+	if request.method == "POST":
+		password = request.form.get("password", None)
+		from_date = request.form.get("from_date", None)
+		to_date = request.form.get("to_date", None)
+		try:
+			error = utils.reserve_room(
+				username=session_username, 
+				password=password,
+				from_date=from_date,
+				to_date=to_date,
+				hotel_id=hotel_id,
+				room_number=room_number
+			)
+
+			if not error:
+				pass
+				# TODO: go to booking page 
+		except ValueError as err:
+			error = err
+	
+	# TODO : show/check which dates are available
+	return render_template('reserve_room.html', username=session_username, error=error)
 
 
-	# todotodotodo
-	return render_template('hotel_info.html', username=session_username)
 
 ### Flight views ###
+
 @app.route('/flights', methods=["GET"])
 def flights():
 	flights = get_flights()

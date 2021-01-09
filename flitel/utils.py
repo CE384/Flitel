@@ -20,3 +20,11 @@ def register_customer(customer):
 		raise ValueError('username already exist')
 	return db.add_customer(customer)
 
+
+def reserve_room(username, from_date, to_date, password, hotel_id, room_number):
+	user = db.get_user(username)
+	if not user or not check_password(password, user['password']):
+		raise ValueError('incorrect password')
+
+	error = db.add_room_booking(hotel_id, room_number, user['id'], from_date, to_date)
+	return error

@@ -148,6 +148,7 @@ create table room_booking(
 		customer_rating >= 1 and customer_rating <= 5
 	),
 
+	check (from_date <= to_date),
 	foreign key (hotel_id, room_number) references room(hotel_id, number),
 	foreign key (id) references booking(id),
 	primary key (id)

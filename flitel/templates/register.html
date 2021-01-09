@@ -1,7 +1,6 @@
 {% extends "base.html" %} 
 
 {% block content %} 
-<div class="flex-col">
 
 <form method="post" class="flex-col">
   <input name="username" placeholder="username" type="text" required/>
@@ -15,8 +14,7 @@
   <input name="Submit" type="submit" />
 </form>
 {% if error != None %}
-{{error}}
+<div class="error">{{error}}</div>
 {% endif %}
-</div>
 
 {% endblock %}

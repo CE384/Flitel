@@ -1,5 +1,6 @@
 import psycopg2
 from configparser import ConfigParser
+from datetime import date
 
 def config(filename="database.ini", section="postgresql"):
 	parser = ConfigParser()
@@ -21,7 +22,7 @@ def add_customer(customer):
 		with connection.cursor() as cursor:
 			insert_user = f"""insert into user_table (type_, username, password) 
 			values('customer', '{customer['username']}', '{customer['password']}')
-			RETURNING id; """
+			returning id; """
 
 			cursor.execute(insert_user)
 			id_of_new_row = cursor.fetchone()[0]
@@ -50,7 +51,12 @@ def get_user(username):
 			cursor.execute(query)
 			result = cursor.fetchall()
 			if result:
-				user = {'username': username, 'type': result[0][1], 'password' : result[0][3]}
+				user = {
+				'username': username,
+				'id': result[0][0],
+				'type': result[0][1],
+				'password' : result[0][3]
+				}
 			print(user)
 	except Exception as e:
 		print(e)
@@ -138,7 +144,6 @@ def get_rooms(hotel_id):
 	except Exception as e:
 		print(e)
 		return e
-	print(rooms)
 	return rooms
 
 def get_flights():
@@ -172,3 +177,28 @@ def get_flights():
 		return e
 
 	return flights
+
+
+def add_room_booking(hotel_id, room_number, user_id, from_date, to_date):
+	try:
+		params = config()
+		connection = psycopg2.connect(**params)
+		with connection.cursor() as cursor:
+			query = f"""insert into booking (submission_date, status_, customer_id) values
+			('{date.today()}', 'waiting for payment', {user_id}) returning id; """
+
+			print(query)
+			cursor.execute(query)
+			id_of_new_row = cursor.fetchone()[0]
+
+			query = f"""insert into room_booking (id, hotel_id, room_number, from_date, to_date) values
+			('{id_of_new_row}', '{hotel_id}', '{room_number}', '{from_date}', '{to_date}'); """
+			print(query)
+			cursor.execute(query)
+		
+		connection.commit()
+	except Exception as e:
+		print(e)
+		return e
+
+	return None
