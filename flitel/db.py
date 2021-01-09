@@ -71,7 +71,7 @@ def get_hotels():
 			results = cursor.fetchall()
 			for r in results:
 				hotel = {
-					'name': r[0],
+					'name': r[0].title(),
 					'id': r[1],
 					'city_name': r[2],
 					'country_name': r[3],
@@ -98,7 +98,7 @@ def get_hotel(hotel_id):
 			r = cursor.fetchone()
 			if r:
 				hotel = {
-					'name': r[0],
+					'name': r[0].title(),
 					'description': r[1],
 					'phone': r[2],
 					'website': r[3],
