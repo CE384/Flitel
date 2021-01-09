@@ -147,22 +147,24 @@ def get_flights():
 		params = config()
 		connection = psycopg2.connect(**params)
 		with connection.cursor() as cursor:
-			query = f"""select airline_name, airline_id, number, price, departure_date,
+			query = f"""select airline_name, airline_id, number, price, departure_date, departure_time, type_,
 			origin_city_name, origin_country_name, destination_city_name, destination_country_name from flight_info;"""
 			
 			cursor.execute(query)
 			results = cursor.fetchall()
 			for r in results:
 				flight = {
-					'airline_name': r[0],
+					'airline_name': r[0].title(),
 					'airline_id': r[1],
 					'number': r[2],
 					'price': r[3],
 					'departure_date': r[4],
-					'origin_city_name': r[5],
-					'origin_country_name': r[6],
-					'destination_city_name': r[7],
-					'destination_country_name': r[8]
+					'departure_time': r[5],
+					'type_': r[6].title(),
+					'origin_city_name': r[7],
+					'origin_country_name': r[8],
+					'destination_city_name': r[9],
+					'destination_country_name': r[10]
 				}
 				flights.append(flight)
 	except Exception as e:

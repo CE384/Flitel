@@ -6,20 +6,26 @@
     <tr class="header">
         <th>Airline</th>
         <th>Number</th>
+        <th>Type</th>
         <th>Departure Date</th>
+        <th>Departure Time</th>
         <th>Origin</th>
         <th>Destination</th>
         <th>Price</th>
+        <th></th>
     </tr>
 {% for flight in flights %}
 
 <tr>
      <th><a href="flights/{{flight.id}}">{{flight.airline_name}}</a></th>
      <th>{{flight.number}}</th>
+     <th>{{flight.type_}}</th>
      <th>{{flight.departure_date}}</th>
+     <th>{{flight.departure_time}}</th>
      <th>{{flight.origin_city_name}}, {{flight.origin_country_name}}</th>
      <th>{{flight.destination_city_name}}, {{flight.destination_country_name}}</th>
      <th>{{flight.price}}$</th>
+     <th><a href="flights/{{flight.id}}">Book</a></th>
 </tr>
 {% endfor %}
 </table>
