@@ -16,7 +16,9 @@ create view hotels_rooms
 create view flight_info
     as select airline.name as airline_name, airline.id as airline_id, flight.number, price, departure_date, departure_time, type_,
     CC1.city_name as origin_city_name, CC1.country_name as origin_country_name,
-    CC2.city_name as destination_city_name, CC2.country_name as destination_country_name
+    CC2.city_name as destination_city_name, CC2.country_name as destination_country_name,
+    capacity - (select count(*) from flight_booking  as FB
+        where airline.id=FB.airline_id and flight.number=FB.flight_number) as remained_seats
     from (airline join flight on airline.id = flight.airline_id)
     join city_country as CC1
     on flight.origin_city_code=CC1.city_code and flight.origin_country_code = CC1.country_code

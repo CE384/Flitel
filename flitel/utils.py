@@ -25,6 +25,8 @@ def reserve_room(username, from_date, to_date, password, hotel_id, room_number):
 	user = db.get_user(username)
 	if not user or not check_password(password, user['password']):
 		raise ValueError('incorrect password')
+	if not user['type'] != 'customer':
+		raise ValueError('You cannot reserve room')
 
 	error = db.add_room_booking(hotel_id, room_number, user['id'], from_date, to_date)
 	return error

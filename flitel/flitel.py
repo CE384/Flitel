@@ -167,3 +167,10 @@ def flights():
 
 	return render_template('flights.html', flights=flights, username=session_username)
 
+
+
+@app.route('/bookings', method=["GET"])
+@login_required
+def bookings():
+	pass
+
