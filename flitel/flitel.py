@@ -167,10 +167,29 @@ def flights():
 
 	return render_template('flights.html', flights=flights, username=session_username)
 
-
-
-@app.route('/bookings', method=["GET"])
+@app.route('/flights/<int:airline_id>%<int:number>', methods=["GET", "POST"])
 @login_required
-def bookings():
-	pass
+def reserve_flight(airline_id, number):
+	session_username = session.get('username')
+	
+	error = None
+	if request.method == "POST":
+		password = request.form.get("password", None)
+		try:
+			error = utils.reserve_flight(
+				username=session_username, 
+				password=password,
+				airline_id=airline_id,
+				flight_number=number
+			)
+
+			if not error:
+				pass
+				# TODO: go to booking page 
+		except ValueError as err:
+			error = err
+	
+	return render_template('reserve_flight.html', username=session_username, error=error)
+
+
 

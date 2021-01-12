@@ -153,7 +153,7 @@ def get_flights():
 		connection = psycopg2.connect(**params)
 		with connection.cursor() as cursor:
 			query = f"""select airline_name, airline_id, number, price, departure_date, departure_time, type_,
-			origin_city_name, origin_country_name, destination_city_name, destination_country_name from flight_info;"""
+			origin_city_name, origin_country_name, destination_city_name, destination_country_name, remained_seats from flight_info;"""
 			
 			cursor.execute(query)
 			results = cursor.fetchall()
@@ -169,7 +169,8 @@ def get_flights():
 					'origin_city_name': r[7],
 					'origin_country_name': r[8],
 					'destination_city_name': r[9],
-					'destination_country_name': r[10]
+					'destination_country_name': r[10],
+					'remained_seats': r[11]
 				}
 				flights.append(flight)
 	except Exception as e:
@@ -193,6 +194,30 @@ def add_room_booking(hotel_id, room_number, user_id, from_date, to_date):
 
 			query = f"""insert into room_booking (id, hotel_id, room_number, from_date, to_date) values
 			('{id_of_new_row}', '{hotel_id}', '{room_number}', '{from_date}', '{to_date}'); """
+			print(query)
+			cursor.execute(query)
+		
+		connection.commit()
+	except Exception as e:
+		print(e)
+		return e
+
+	return None
+
+def add_flight_booking(airline_id, flight_number, user_id):
+	try:
+		params = config()
+		connection = psycopg2.connect(**params)
+		with connection.cursor() as cursor:
+			query = f"""insert into booking (submission_date, status_, customer_id) values
+			('{date.today()}', 'waiting for payment', {user_id}) returning id; """
+
+			print(query)
+			cursor.execute(query)
+			id_of_new_row = cursor.fetchone()[0]
+
+			query = f"""insert into flight_booking (id, airline_id, flight_number) values
+			('{id_of_new_row}', '{airline_id}', '{flight_number}'); """
 			print(query)
 			cursor.execute(query)
 		
