@@ -110,3 +110,54 @@ table.table1 tr.header {
   width: 100%;
   padding: 10px;
 }
+
+.flashes {
+  list-style-type: none;
+  width: 70%;
+  margin: auto;
+  padding: 10px;
+  color: black;
+}
+
+.flashes li {
+  padding: 10px;
+}
+
+.flashes .success {
+  background-color: rgb(123, 240, 87);
+}
+
+.flashes .error {
+  background-color: rgb(255, 109, 109);
+}
+
+
+tr.completed {
+  background-color: rgb(126, 194, 0) !important;
+}
+
+tr.cancelled {
+  background-color: rgb(255, 121, 121) !important;
+}
+
+
+#booking-info {
+    display: flex;
+    flex-direction: column;
+    align-content: left;
+    align-items: left;
+    justify-content: left;
+  
+}
+
+#booking-info label{
+	font-weight: bold;
+	color: #c6d5ff;
+}
+
+#booking-info div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

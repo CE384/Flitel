@@ -27,7 +27,7 @@
      <th>{{flight.destination_city_name}}, {{flight.destination_country_name}}</th>
      <th>{{flight.remained_seats}}</th>
      <th>{{flight.price}}$</th>
-     <th><a href="flights/{{flight.airline_id}}%{{flight.number}}">Book</a></th>
+     <th><a href="flights/{{flight.airline_id}}/{{flight.number}}">Book</a></th>
 </tr>
 {% endfor %}
 </table>

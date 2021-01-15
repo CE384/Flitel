@@ -35,7 +35,6 @@ def add_customer(customer):
 
 		connection.commit()
 	except Exception as e:
-		print(e)
 		return e
 
 	return None
@@ -57,9 +56,7 @@ def get_user(username):
 				'type': result[0][1],
 				'password' : result[0][3]
 				}
-			print(user)
 	except Exception as e:
-		print(e)
 		return e
 
 	return user
@@ -85,7 +82,6 @@ def get_hotels():
 				}
 				hotels.append(hotel)
 	except Exception as e:
-		print(e)
 		return e
 
 	return hotels
@@ -117,7 +113,6 @@ def get_hotel(hotel_id):
 				}
 
 	except Exception as e:
-		print(e)
 		return e
 
 	return hotel
@@ -141,9 +136,10 @@ def get_rooms(hotel_id):
 					'price': r[3]
 				}
 				rooms.append(room)
+
 	except Exception as e:
-		print(e)
-		return e
+		return e	
+	
 	return rooms
 
 def get_flights():
@@ -174,7 +170,6 @@ def get_flights():
 				}
 				flights.append(flight)
 	except Exception as e:
-		print(e)
 		return e
 
 	return flights
@@ -188,18 +183,16 @@ def add_room_booking(hotel_id, room_number, user_id, from_date, to_date):
 			query = f"""insert into booking (submission_date, status_, customer_id) values
 			('{date.today()}', 'waiting for payment', {user_id}) returning id; """
 
-			print(query)
 			cursor.execute(query)
 			id_of_new_row = cursor.fetchone()[0]
 
 			query = f"""insert into room_booking (id, hotel_id, room_number, from_date, to_date) values
 			('{id_of_new_row}', '{hotel_id}', '{room_number}', '{from_date}', '{to_date}'); """
-			print(query)
+
 			cursor.execute(query)
 		
 		connection.commit()
 	except Exception as e:
-		print(e)
 		return e
 
 	return None
@@ -212,18 +205,46 @@ def add_flight_booking(airline_id, flight_number, user_id):
 			query = f"""insert into booking (submission_date, status_, customer_id) values
 			('{date.today()}', 'waiting for payment', {user_id}) returning id; """
 
-			print(query)
 			cursor.execute(query)
 			id_of_new_row = cursor.fetchone()[0]
 
 			query = f"""insert into flight_booking (id, airline_id, flight_number) values
 			('{id_of_new_row}', '{airline_id}', '{flight_number}'); """
-			print(query)
+
 			cursor.execute(query)
 		
 		connection.commit()
-	except Exception as e:
-		print(e)
+	except Exception as e:	
 		return e
 
 	return None
+
+def get_bookings(user_id, booking_id=None):
+	results = []
+	try:
+		params = config()
+		connection = psycopg2.connect(**params)
+		with connection.cursor() as cursor:
+			if not booking_id:
+				query = f"""select * from bookings_customer_view where customer_id = {user_id};"""
+			else:
+				query = f"""select * from bookings_customer_view where customer_id = {user_id} and id={booking_id};"""
+
+			cursor.execute(query)
+			res = cursor.fetchall()
+
+			for r in res:
+				result = {
+					'id': r[0],
+					'submission_date': r[1],
+					'status': r[2],
+					'transaction_date': r[3],
+					'transaction_amount': r[4],
+					'price': r[5],
+					'type': r[6]
+				}
+				results.append(result)
+	except Exception as e:
+		return e
+
+	return results

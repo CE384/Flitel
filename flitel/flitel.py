@@ -40,6 +40,7 @@ def login_required(f):
 			return redirect(url_for('login', next=request.url))
 		return f(*args, **kwargs)
 	return decorated_function
+	
 
 ### Auth views ###
 
@@ -69,8 +70,11 @@ def login():
 			return redirect(url_for('home'))
 		except ValueError as err:
 			error = err
+
+	if error:
+		flash(error, 'error')
 	
-	return render_template('login.html', error=error, username=session_username)
+	return render_template('login.html', username=session_username)
 
 
 @app.route('/register', methods=["GET", "POST"])
@@ -104,11 +108,15 @@ def register():
 				return redirect(url_for('home'))
 		except ValueError as err:
 			error = err
+	if error:
+		flash(error, 'error')
 
-	return render_template('register.html', error=error, username=session_username)
+	return render_template('register.html', username=session_username)
 
 
 ### Hotel views ###
+
+
 @app.route('/hotels', methods=["GET"])
 def hotels():
 	hotels = get_hotels()
@@ -148,13 +156,16 @@ def reserve_room(hotel_id, room_number):
 			)
 
 			if not error:
-				pass
-				# TODO: go to booking page 
+				flash('Room reserved successfully!', 'success')
+				return redirect(url_for('my_bookings'))
 		except ValueError as err:
 			error = err
+		
+	if error:
+		flash(error, 'error')
 	
 	# TODO : show/check which dates are available
-	return render_template('reserve_room.html', username=session_username, error=error)
+	return render_template('reserve_room.html', username=session_username)
 
 
 
@@ -167,7 +178,8 @@ def flights():
 
 	return render_template('flights.html', flights=flights, username=session_username)
 
-@app.route('/flights/<int:airline_id>%<int:number>', methods=["GET", "POST"])
+
+@app.route('/flights/<int:airline_id>/<int:number>', methods=["GET", "POST"])
 @login_required
 def reserve_flight(airline_id, number):
 	session_username = session.get('username')
@@ -184,12 +196,47 @@ def reserve_flight(airline_id, number):
 			)
 
 			if not error:
-				pass
-				# TODO: go to booking page 
+				flash('Flight reserved successfully!', 'success')
+				return redirect(url_for('my_bookings'))
+
 		except ValueError as err:
 			error = err
+
+	if error:
+		flash(error, 'error')
+
+	return render_template('reserve_flight.html', username=session_username)
+
+
+### Booking for users view ###
+
+@app.route('/bookings', methods=['GET'])
+@login_required
+def my_bookings():
+	session_username = session.get('username')
+
+	bookings = utils.get_customer_booking(session_username)
+
+	return render_template('bookings.html', bookings=bookings, username=session_username)
+
+
+@app.route('/payment/<int:booking_id>', methods=['GET'])
+@login_required
+def payment(booking_id):
+	session_username = session.get('username')
+	booking = utils.get_customer_booking(session_username, booking_id)[0]
+
+	if request.method == "POST":
+		pass
+		# TODO
+
+	return render_template('payment.html', booking=booking, username=session_username)
+
+@app.route('/cancel/<int:booking_id>')
+@login_required
+def cancel(booking_id):
 	
-	return render_template('reserve_flight.html', username=session_username, error=error)
+	# TODO cancel booking
 
-
-
+	flash('Reservation cancelled succesfully!', 'success')
+	return redirect(url_for('my_bookings'))

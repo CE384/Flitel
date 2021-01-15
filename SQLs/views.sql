@@ -43,3 +43,14 @@ create view hotel_bookings_status
     join (room_booking as RB join room 
         on RB.hotel_id = room.hotel_id and RB.room_number = room.number)
     on booking.id = RB.id;
+
+
+create view bookings_customer_view 
+    as (select B.id, B.submission_date, B.status_, B.transaction_date, B.transaction_amount, flight.price, 'flight' as type, B.customer_id
+    from (booking natural join flight_booking) as B
+    join flight on B.airline_id = flight.airline_id and B.flight_number = flight.number)
+    union
+    (
+    select B.id, B.submission_date, B.status_, B.transaction_date, B.transaction_amount, room.price, 'room' as type, B.customer_id
+    from (booking natural join room_booking) as B
+    join room on B.hotel_id = room.hotel_id and B.room_number = room.number);

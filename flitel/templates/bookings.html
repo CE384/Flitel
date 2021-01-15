@@ -1,0 +1,38 @@
+{% extends "base.html" %} 
+
+{% block content %}
+<h2> Bookings </h2>
+<table class="table1">
+    <tr class="header">
+        <th>ID</th>
+        <th>Type</th>
+        <th>Submission date</th>
+        <th>Status</th>
+        <th>Transaction amount</th>
+        <th>Transaction date</th>
+        <th>Price</th>
+        <th></th>
+    </tr>
+{% for booking in bookings %}
+
+<tr class={{booking.status.split()[0]}}>
+     <th>{{booking.id}}</th>
+     <th>{{booking.type}}</th>
+     <th>{{booking.submission_date}}</th>
+     <th>{{booking.status}}</th>
+     <th>{{booking.transaction_amount}}</th>
+     <th>{{booking.transaction_date}}</th>
+     <th>{{booking.price}}</th>
+     <th>
+     {%if booking.status == "waiting for payment" %}
+        <a href="payment/{{booking.id}}">Pay now!</a>
+     {% endif %}
+     {%if booking.status != "cancelled" %}
+        <a href="cancel/{{booking.id}}" style="font-size: smaller;">cancel</a>
+     {% endif %}
+    </th>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

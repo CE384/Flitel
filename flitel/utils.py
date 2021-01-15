@@ -1,4 +1,5 @@
 import bcrypt
+from werkzeug.exceptions import NotFound
 import db
 
 def get_hashed_password(password):
@@ -40,3 +41,10 @@ def reserve_flight(username, password, airline_id, flight_number):
 
 	error = db.add_flight_booking(airline_id, flight_number, user['id'])
 	return error
+
+def get_customer_booking(username, booking_id=None):
+	user = db.get_user(username)
+	if not user['type'] == 'customer':
+		raise NotFound()
+
+	return db.get_bookings(user['id'], booking_id)
