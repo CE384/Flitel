@@ -14,7 +14,6 @@ begin
 end
 $func$  language plpgsql;
 
-
 create trigger check_room_empty
 before insert on room_booking 
 for each row  execute procedure check_room_empty();
@@ -24,18 +23,15 @@ create function check_flight_has_capacity()
   returns trigger as
 $func$
 begin
-    if (exists 
-    (select res from (select ((select remained_seats from flight_info 
-        where airline_id=new.airline_id and number=new.flight_number) = (select 0)) as res) as T where T.res = true))
+    if (select remained_seats from flight_info
+        where airline_id=new.airline_id and number=new.flight_number) = 0
     then
         raise exception 'This flight doesnt have enough seats.';
     end if;
     return new;
 end
-$func$  language plpgsql;
-
+$func$ language plpgsql;
 
 create trigger check_flight_has_capacity
-before insert on room_booking 
-for each row  execute procedure check_flight_has_capacity();
-
+before insert on flight_booking
+for each row execute procedure check_flight_has_capacity();
