@@ -64,7 +64,6 @@ def login():
 		try:
 			utils.login_user(username, password)
 			session['username'] = username
-			print(next_url)
 			if next_url:
 				return redirect(next_url)
 			return redirect(url_for('home'))
@@ -220,17 +219,31 @@ def my_bookings():
 	return render_template('bookings.html', bookings=bookings, username=session_username)
 
 
-@app.route('/payment/<int:booking_id>', methods=['GET'])
+@app.route('/payment/<int:booking_id>', methods=['GET', 'POST'])
 @login_required
 def payment(booking_id):
 	session_username = session.get('username')
 	booking = utils.get_customer_booking(session_username, booking_id)[0]
 
+	error = None
 	if request.method == "POST":
-		pass
-		# TODO
+		try:
+			password = request.form.get("password", None)
+			discount_code = request.form.get("discount", None)
+			error = utils.handle_payment(session_username, password, discount_code ,booking)
 
+			if not error:
+				flash('Reservation completed succesfully!', 'success')
+				return redirect(url_for('my_bookings'))
+
+		except ValueError as err:
+			error = err
+
+	if error:
+		flash(error, 'error')
+	
 	return render_template('payment.html', booking=booking, username=session_username)
+
 
 @app.route('/cancel/<int:booking_id>')
 @login_required

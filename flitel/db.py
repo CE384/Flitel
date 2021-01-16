@@ -248,3 +248,49 @@ def get_bookings(user_id, booking_id=None):
 		return e
 
 	return results
+
+
+def get_discount(discount_code):
+	discount = None
+	try:
+		params = config()
+		connection = psycopg2.connect(**params)
+		with connection.cursor() as cursor:
+			query = f"""select * from discount 
+			where id = '{discount_code}' and 
+			id not in (select discount_id from book_discount where discount_id=id);"""
+			
+			cursor.execute(query)
+			res = cursor.fetchall()
+
+			if res:
+				discount = {
+					'code': discount_code,
+					'percent': res[0][1]
+				}
+	except Exception as e:
+		return e
+
+	return discount
+
+
+def complete_booking(booking_id, amount, discount_code):	
+	try:
+		params = config()
+		connection = psycopg2.connect(**params)
+		with connection.cursor() as cursor:
+
+			if discount_code:
+				query = f"""insert into book_discount values ({booking_id}, '{discount_code}');"""
+				cursor.execute(query)
+
+			query = f""" update booking SET status_ = 'completed', transaction_date = '{date.today()}', transaction_amount={amount}
+			where id={booking_id};"""
+
+			cursor.execute(query)
+
+		connection.commit()
+	except Exception as e:
+		return e
+
+	return None

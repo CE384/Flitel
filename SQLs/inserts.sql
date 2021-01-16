@@ -155,3 +155,7 @@ insert into flight values (16, 1, 'economy', 100, 100, 3, 1, 5, 1, '2021-01-08',
 insert into flight values (16, 2, 'economy', 100, 200, 5, 1, 5, 2, '2021-01-09', '15:00:00'); -- london- manchester
 
 
+insert into discount values('dis1', 10);
+insert into discount values('dis2', 50);
+insert into discount values('dis3', 20);
+insert into discount values('dis4', 60);

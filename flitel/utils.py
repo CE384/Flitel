@@ -1,3 +1,4 @@
+from datetime import datetime
 import bcrypt
 from werkzeug.exceptions import NotFound
 import db
@@ -48,3 +49,27 @@ def get_customer_booking(username, booking_id=None):
 		raise NotFound()
 
 	return db.get_bookings(user['id'], booking_id)
+
+
+def handle_payment(username, password, discount_code, booking):
+	user = db.get_user(username)
+	
+	if not user or not check_password(password, user['password']):
+		raise ValueError('incorrect password')
+
+	if not user['type'] == 'customer':
+		raise NotFound()
+
+	discount = None
+	if discount_code:
+		discount = db.get_discount(discount_code)
+		if not discount:
+			raise ValueError('Discount code is invalid.')
+		
+		
+	amount = booking['price']
+	if discount:
+		amount = amount * (100 - discount['percent']) / 100
+
+	return db.complete_booking(booking['id'], amount, discount_code)
+
