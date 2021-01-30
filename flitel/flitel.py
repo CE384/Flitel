@@ -245,11 +245,28 @@ def payment(booking_id):
 	return render_template('payment.html', booking=booking, username=session_username)
 
 
-@app.route('/cancel/<int:booking_id>')
+@app.route('/cancel/<int:booking_id>', methods=['GET', 'POST'])
 @login_required
 def cancel(booking_id):
 	
-	# TODO cancel booking
+	session_username = session.get('username')
+	booking = utils.get_customer_booking(session_username, booking_id)[0]
 
-	flash('Reservation cancelled succesfully!', 'success')
+	error = None
+	if request.method == "POST":
+		try:
+			password = request.form.get("password", None)
+			error = utils.handle_cancel(session_username, password ,booking)
+
+			if not error:
+				flash('Reservation cancelled succesfully!', 'success')
+				return redirect(url_for('my_bookings'))
+
+		except ValueError as err:
+			error = err
+
+	if error:
+		flash(error, 'error')
+
 	return redirect(url_for('my_bookings'))
+	

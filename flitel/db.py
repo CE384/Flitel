@@ -294,3 +294,28 @@ def complete_booking(booking_id, amount, discount_code):
 		return e
 
 	return None
+
+def cancel(booking_id):	
+	try:
+		params = config()
+		connection = psycopg2.connect(**params)
+		with connection.cursor() as cursor:
+
+			query = f""" delete from room_booking 
+			where id={booking_id};"""
+			cursor.execute(query)
+
+			query = f""" delete from flight_booking 
+			where id={booking_id};"""
+			cursor.execute(query)
+
+			query = f""" update booking SET status_ = 'cancelled'
+			where id={booking_id};"""
+
+			cursor.execute(query)
+
+		connection.commit()
+	except Exception as e:
+		return e
+
+	return None
