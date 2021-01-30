@@ -15,8 +15,8 @@ Computer Engineering Department
 ## Setup
 
 ```Bash
-$ py -3 -m venv env
 pip install -r .\requirements.txt
+$ py -3 -m venv env
 env\Scripts\activate                              
 \run.sh    
 ```
