@@ -1,5 +1,5 @@
 # Flight-Hotel Reservation System
-Implementation of an Flight-Hotel Reservation System using Flask and PostgreSQL.
+Implementation of a Flight-Hotel Reservation System using Flask and PostgreSQL.
 
 Database Course Final Project 
 
