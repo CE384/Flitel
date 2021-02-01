@@ -1,5 +1,5 @@
 # Airline-Hotel Reservation System
-Implementation of an Airline-Hotel Reservation System using PostgreSQL.
+Implementation of an Airline-Hotel Reservation System using Flask and PostgreSQL.
 
 Database Course Final Project 
 
@@ -12,12 +12,27 @@ Computer Engineering Department
 -  [Saba Hashemi](https://github.com/savaw)
 -  [Kimia Noorbakhsh](https://github.com/kimianoorbakhsh)
 
-## Setup for Windows
+## Setup 
+
 
 ```Bash
+git clone https://github.com/CE384/Flitel.git
+cd Flitel/flitel
+python3 -m venv env
+./env/bin/activate
+pip install -r requirements.txt
+cp database.ini.example database.ini
+./run.sh   
+```
+- Fill your postgres database credential in Flitel/flitel/database.ini
+
+### Windows
+
+```Bash
+py -3 -m venv env
 pip install -r .\requirements.txt
-$ py -3 -m venv env
 env\Scripts\activate                              
 \run.sh    
 ```
+
 
