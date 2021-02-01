@@ -4,8 +4,9 @@
 <h2> Bookings </h2>
 <table class="table1">
     <tr class="header">
-        <th>ID</th>
+        <!-- <th>ID</th> -->
         <th>Type</th>
+        <th>For date</th>
         <th>Submission date</th>
         <th>Status</th>
         <th>Transaction amount</th>
@@ -16,21 +17,32 @@
 {% for booking in bookings %}
 
 <tr class={{booking.status.split()[0]}}>
-     <th>{{booking.id}}</th>
-     <th>{{booking.type}}</th>
-     <th>{{booking.submission_date}}</th>
-     <th>{{booking.status}}</th>
-     <th>{{booking.transaction_amount}}</th>
-     <th>{{booking.transaction_date}}</th>
-     <th>{{booking.price}}</th>
-     <th>
-     {%if booking.status == "waiting for payment" %}
-        <a href="payment/{{booking.id}}">Pay now!</a>
-     {% endif %}
-     {%if booking.status != "cancelled" %}
-        <a href="cancel/{{booking.id}}" style="font-size: smaller;">cancel</a>
-     {% endif %}
-    </th>
+     <!-- <td>{{booking.id}}</td> -->
+     <td>{{booking.type}}</td>
+     <td>{{booking.from_date}}</td>
+     <td>{{booking.submission_date}}</td>
+     <td>{{booking.status}}</td>
+     <td>{{booking.transaction_amount}}</td>
+     <td>{{booking.transaction_date}}</td>
+     <td>{{booking.price}}</td>
+     <td>
+    {% if not booking.started %}
+        {%if booking.status == "waiting for payment" %}
+                <a href="payment/{{booking.id}}">Pay now!</a>
+        {% endif %}
+        {%if booking.status != "cancelled" %}
+            <a href="cancel/{{booking.id}}" style="font-size: smaller;">cancel</a>
+        {% endif %}
+    {% endif %}
+
+    {% if booking.ended %}
+        {% if booking.type == 'room' and booking.status == 'completed' %}
+        <a href="hotels/{{booking.hotel_or_airline_id}}?booking_id={{booking.id}}">Rate this Hotel!</a>
+        {% endif %}
+    {% else %}
+        
+    {% endif %}
+    </td>
 </tr>
 {% endfor %}
 </table>

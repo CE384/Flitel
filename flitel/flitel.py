@@ -1,3 +1,4 @@
+from datetime import date
 from flask import Flask, session, redirect, url_for, request, render_template, abort, flash
 from functools import wraps
 
@@ -123,15 +124,39 @@ def hotels():
 
 	return render_template('hotels.html', hotels=hotels, username=session_username)
 
-@app.route('/hotels/<int:id>', methods=["GET"])
+@app.route('/hotels/<int:id>', methods=["GET", "POST"])
 def hotel(id):
 	session_username = session.get('username')
+
+	booking_id = request.args.get('booking_id', -1)
+	rate=False
+	if booking_id != -1:
+		rate = True
+	error = None
+	if request.method == "POST":
+		rating = request.form.get("rating", None)
+		try:
+			error = utils.add_rating(
+				username=session_username,
+				rating=rating,
+				hotel_id=id,
+				booking_id=booking_id
+			)
+
+			if not error:
+				flash('Your rating was submitted!', 'success')
+		except ValueError as err:
+			error = err
+
+		if error:
+			flash(error, 'error')
+
 
 	hotel = get_hotel(id)
 	if not hotel:
 		abort(404)
 	rooms = get_rooms(id)
-	return render_template('hotel_info.html', hotel=hotel, rooms=rooms, username=session_username)
+	return render_template('hotel_info.html', hotel=hotel, rooms=rooms, rate=rate, username=session_username)
 
 
 @app.route('/hotels/<int:hotel_id>/room/<int:room_number>', methods=["GET", "POST"])
@@ -163,7 +188,6 @@ def reserve_room(hotel_id, room_number):
 	if error:
 		flash(error, 'error')
 	
-	# TODO : show/check which dates are available
 	return render_template('reserve_room.html', username=session_username)
 
 
@@ -215,6 +239,12 @@ def my_bookings():
 	session_username = session.get('username')
 
 	bookings = utils.get_customer_booking(session_username)
+
+	for booking in bookings:
+		if date.today() >= booking['from_date']:
+			booking['started'] = True
+		if date.today() >= booking['to_date']:
+			booking['ended'] = True
 
 	return render_template('bookings.html', bookings=bookings, username=session_username)
 

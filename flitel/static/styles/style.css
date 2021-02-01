@@ -1,5 +1,6 @@
 body {
-  font-family: Helvetica, Arial;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-size: small;
   margin: auto;
   background-color: rgb(33, 40, 105);
   color: white;
@@ -161,3 +162,4 @@ tr.cancelled {
   align-items: center;
   justify-content: space-between;
 }
+

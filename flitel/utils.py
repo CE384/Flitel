@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 import bcrypt
 from werkzeug.exceptions import NotFound
 import db
@@ -81,3 +81,18 @@ def handle_cancel(username, booking):
 
 	return db.cancel(booking['id'])
 
+
+def add_rating(username, rating, hotel_id, booking_id):
+	user = db.get_user(username)
+	
+	if not user['type'] == 'customer':
+		raise NotFound()
+
+	booking = db.get_bookings(user['id'], booking_id)
+
+	if not booking or date.today() < booking[0]['to_date']:
+		raise ValueError("You cannot rate this room until your accommodation is complete")
+
+	
+	return db.update_hotel_rating(booking_id, rating)
+	

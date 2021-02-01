@@ -3,7 +3,8 @@ create view city_country (city_code, country_code, city_name, country_name)
     from city join country on city.country_code = country.code;
 
 create view hotels_info 
-    as select hotel.name, hotel.id, city_name, country_name, stars_count
+    as select hotel.name, hotel.id, city_name, country_name, stars_count, 
+    (select avg(customer_rating) from room_booking where hotel_id = hotel.id) as customer_rating
     from (hotel join city_country as CC
     on hotel.city_code= CC.city_code and hotel.country_code = CC.country_code);
 
@@ -46,11 +47,13 @@ create view hotel_bookings_status
 
 
 create view bookings_customer_view 
-    as (select B.id, B.submission_date, B.status_, B.transaction_date, B.transaction_amount, flight.price, 'flight' as type, B.customer_id
+    as (select B.id, B.submission_date, B.status_, B.transaction_date, B.transaction_amount, flight.price, 'flight' as type, 
+    B.customer_id, B.airline_id as hotel_or_airline_id, flight.departure_date as from_date, flight.departure_date as to_date
     from (booking natural join flight_booking) as B
     join flight on B.airline_id = flight.airline_id and B.flight_number = flight.number)
     union
     (
-    select B.id, B.submission_date, B.status_, B.transaction_date, B.transaction_amount, room.price, 'room' as type, B.customer_id
+    select B.id, B.submission_date, B.status_, B.transaction_date, B.transaction_amount, room.price, 'room' as type,
+     B.customer_id, B.hotel_id as hotel_or_airline_id, B.from_date, B.to_date
     from (booking natural join room_booking) as B
     join room on B.hotel_id = room.hotel_id and B.room_number = room.number);

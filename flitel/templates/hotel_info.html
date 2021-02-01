@@ -3,13 +3,14 @@
   <p>{{hotel.country_name}}, {{hotel.city_name}}</p>
 
   <h2>{{hotel.name}}
-
+    {% if hotel.stars_count %}
     {% for i in range(hotel.stars_count) %}
     ⭐
     {% endfor %}
     {% for in in range(hotel.stars_count, 5) %}
     ☆
     {% endfor %}
+    {% endif %}
   </h2>
 
   <label> Description:</label>
@@ -20,6 +21,19 @@
   <p> {{hotel.address}}</p>
   <label> Contact:</label>
   <p> +{{hotel.phone}} - <a href={{hotel.website}} >website</a></p>
+  <label> Customers Rating:</label>
+  <p> {{hotel.customer_rating}} (from 5)</p>  
+
+  {% if rate %}
+  <form method="post" class="form2">
+    <div class="field">
+        <label>Your rating:</label>
+    <input type="number" name="rating" min="1" max="5">
+    <input name="Submit" type="submit" />
+    </div>
+    {% endif %}
+</form>
+
 </div>
   <table class="table1" id="hotel-rooms">
     <tr class="header">

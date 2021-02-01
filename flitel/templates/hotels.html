@@ -12,10 +12,10 @@
 {% for hotel in hotels %}
 
 <tr>
-     <th><a href="hotels/{{hotel.id}}">{{hotel.name}}</a></th>
-     <th>{{hotel.country_name}}</th>
-     <th>{{hotel.city_name}}</th>
-     <th>{{hotel.stars_count}}</th>
+     <td><a href="hotels/{{hotel.id}}">{{hotel.name}}</a></td>
+     <td>{{hotel.country_name}}</td>
+     <td>{{hotel.city_name}}</td>
+     <td>{{hotel.stars_count}}</td>
 </tr>
 {% endfor %}
 </table>

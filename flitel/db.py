@@ -93,7 +93,7 @@ def get_hotel(hotel_id):
 		connection = psycopg2.connect(**params)
 		with connection.cursor() as cursor:
 
-			query = f"""select name, description, phone, website, address, facilities, stars_count, country_name, city_name, id
+			query = f"""select name, description, phone, website, address, facilities, stars_count, country_name, city_name, id, customer_rating
 			from hotels_info natural join hotel where id = {hotel_id};"""
 			
 			cursor.execute(query)
@@ -109,8 +109,11 @@ def get_hotel(hotel_id):
 					'stars_count': r[6],
 					'country_name': r[7],
 					'city_name': r[8],
-					'id': r[9]
+					'id': r[9],
+					'customer_rating': r[10]
 				}
+				if hotel['customer_rating']:
+					hotel['customer_rating'] = round(hotel['customer_rating'], 2)
 
 	except Exception as e:
 		return e
@@ -241,7 +244,11 @@ def get_bookings(user_id, booking_id=None):
 					'transaction_date': r[3],
 					'transaction_amount': r[4],
 					'price': r[5],
-					'type': r[6]
+					'type': r[6],
+					'customer_id': r[7],
+					'hotel_or_airline_id': r[8],
+					'from_date': r[9],
+					'to_date': r[10]
 				}
 				results.append(result)
 	except Exception as e:
@@ -303,6 +310,23 @@ def cancel(booking_id):
 
 			query = f""" update booking SET status_ = 'cancelled'
 			where id={booking_id};"""
+
+			cursor.execute(query)
+
+		connection.commit()
+	except Exception as e:
+		return e
+
+	return None
+
+
+
+def update_hotel_rating(booking_id, rating):	
+	try:
+		params = config()
+		connection = psycopg2.connect(**params)
+		with connection.cursor() as cursor:
+			query = f"""update room_booking SET customer_rating = {rating} where id={booking_id};"""
 
 			cursor.execute(query)
 
