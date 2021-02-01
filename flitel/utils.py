@@ -90,7 +90,7 @@ def add_rating(username, rating, hotel_id, booking_id):
 
 	booking = db.get_bookings(user['id'], booking_id)
 
-	if not booking or date.today() < booking[0]['to_date']:
+	if not booking or date.today() < booking[0]['to_date'] or booking[0]['hotel_or_airline_id'] != hotel_id:
 		raise ValueError("You cannot rate this room until your accommodation is complete")
 
 	

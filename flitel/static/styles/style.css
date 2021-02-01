@@ -4,6 +4,8 @@ body {
   margin: auto;
   background-color: rgb(33, 40, 105);
   color: white;
+  background-image: url('/static/img/bg1.jpg');
+  background-size: cover;
 }
 
 #navbar {
@@ -163,3 +165,25 @@ tr.cancelled {
   justify-content: space-between;
 }
 
+
+#main-content {
+  background-color: rgba(33, 40, 105, 0.8);
+  margin: auto;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  
+}
+
+
+.big-link{
+  padding: 10px;
+  margin: 10px;
+  background-color:  rgb(250, 217, 70);
+  font-size:x-large;
+  border-radius: 25px;
+}
+
+.big-link a {
+  text-decoration: none;
+  color:rgb(7, 19, 134);
+}

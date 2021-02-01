@@ -5,6 +5,7 @@
 	<link rel="stylesheet" href="/static/styles/style.css">
 </head>
 <body>
+
 	<div id="navbar">
 		{% if username %}	
 		<div class="left">
@@ -28,7 +29,9 @@
 	</div>
 	<hr>
 	
-	{% with messages = get_flashed_messages(with_categories=true) %}
+
+	<div class="container flex-col" id="main-content">
+		{% with messages = get_flashed_messages(with_categories=true) %}
 		{% if messages %}
 			<ul class="flashes">
 			{% for category, message in messages %}
@@ -38,7 +41,6 @@
 		{% endif %}
 	{% endwith %}
 
-	<div class="container flex-col">
 		{% block content %}
 		{% endblock %}
 	</div>
