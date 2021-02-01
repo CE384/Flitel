@@ -119,7 +119,11 @@ def register():
 
 @app.route('/hotels', methods=["GET"])
 def hotels():
-	hotels = get_hotels()
+	country_name = request.args.get('country_name', '')
+	city_name = request.args.get('city_name', '')
+	name = request.args.get('name', '')
+
+	hotels = get_hotels(country=country_name, city=city_name, name=name)
 	session_username = session.get('username')
 
 	return render_template('hotels.html', hotels=hotels, username=session_username)
@@ -196,7 +200,16 @@ def reserve_room(hotel_id, room_number):
 
 @app.route('/flights', methods=["GET"])
 def flights():
-	flights = get_flights()
+
+	origin_country = request.args.get('origin_country', '')
+	destination_city = request.args.get('destination_city', '')
+	origin_city = request.args.get('origin_city', '')
+	destination_country = request.args.get('destination_country', '')
+	departure_date = request.args.get('departure_date', '')
+
+	flights = get_flights(origin_country=origin_country, destination_city=destination_city, origin_city=origin_city,
+	 destination_country=destination_country, departure_date=departure_date)
+	 
 	session_username = session.get('username')
 
 	return render_template('flights.html', flights=flights, username=session_username)

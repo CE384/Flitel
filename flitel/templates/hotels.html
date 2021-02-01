@@ -1,6 +1,17 @@
 {% extends "base.html" %} 
 
 {% block content %}
+
+<form method="get" >
+    <p> Search: </p>
+    <div class="field">
+    <input name="name" placeholder="hotel name" type="text" />
+    <input name="country_name" placeholder="country name" type="text" />
+    <input name="city_name" placeholder="city name" type="text" />
+    <input name="Submit/Clear" type="submit" />
+    </div>
+</form>
+
 <h2> Hotels </h2>
 <table class="table1">
     <tr class="header">

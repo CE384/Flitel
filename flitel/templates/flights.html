@@ -1,6 +1,23 @@
 {% extends "base.html" %} 
 
 {% block content %}
+
+
+<form method="get" >
+    <p> Search: </p>
+    <div class="field">
+    <input name="name" placeholder="hotel name" type="text" />
+    <input name="origin_city" placeholder="origin city" type="text" />
+    <input name="origin_country" placeholder="origin country" type="text" />
+    <input name="destination_city" placeholder="destination city" type="text" />
+    <input name="destination_country" placeholder="destination country" type="text" />
+    <input name="departure_date" placeholder="departure date" type="date" />
+    <input name="Submit/Clear" type="submit" />
+    </div>
+</form>
+
+
+
 <h2> Flights </h2>
 <table class="table1">
     <tr class="header">

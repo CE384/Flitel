@@ -62,13 +62,16 @@ def get_user(username):
 	return user
 
 
-def get_hotels():
+def get_hotels(country="", city="", name=""):
 	hotels = []
 	try:
 		params = config()
 		connection = psycopg2.connect(**params)
 		with connection.cursor() as cursor:
-			query = f"""select name, id, city_name, country_name, stars_count from hotels_info;"""
+			query = f"""select name, id, city_name, country_name, stars_count from hotels_info
+			 where country_name ILIKE '%{country}%'
+			 and city_name ILIKE '%{city}%'
+			 and name ILIKE '%{name}%';"""
 			
 			cursor.execute(query)
 			results = cursor.fetchall()
@@ -85,6 +88,7 @@ def get_hotels():
 		return e
 
 	return hotels
+
 
 def get_hotel(hotel_id):
 	hotel = None
@@ -145,15 +149,22 @@ def get_rooms(hotel_id):
 	
 	return rooms
 
-def get_flights():
+def get_flights(origin_country='', destination_city='', origin_city='', destination_country='', departure_date=None):
 	flights = []
 	try:
 		params = config()
 		connection = psycopg2.connect(**params)
 		with connection.cursor() as cursor:
 			query = f"""select airline_name, airline_id, number, price, departure_date, departure_time, type_,
-			origin_city_name, origin_country_name, destination_city_name, destination_country_name, remained_seats from flight_info;"""
-			
+			origin_city_name, origin_country_name, destination_city_name, destination_country_name, remained_seats from flight_info
+			where origin_city_name ILIKE '%{origin_city}%'
+			and origin_country_name ILIKE '%{origin_country}%'
+			and destination_city_name ILIKE '%{destination_city}%'
+			and destination_country_name ILIKE '%{destination_country}%'
+			"""
+			if departure_date:
+				query = f"{query} and departure_date = '{departure_date}';"
+ 			
 			cursor.execute(query)
 			results = cursor.fetchall()
 			for r in results:
