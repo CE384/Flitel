@@ -12,7 +12,7 @@ Computer Engineering Department
 -  [Saba Hashemi](https://github.com/savaw)
 -  [Kimia Noorbakhsh](https://github.com/kimianoorbakhsh)
 
-## Setup
+## Setup for Windows
 
 ```Bash
 pip install -r .\requirements.txt
