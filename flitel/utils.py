@@ -73,11 +73,8 @@ def handle_payment(username, password, discount_code, booking):
 
 	return db.complete_booking(booking['id'], amount, discount_code)
 
-def handle_cancel(username, password, booking):
+def handle_cancel(username, booking):
 	user = db.get_user(username)
-	
-	if not user or not check_password(password, user['password']):
-		raise ValueError('incorrect password')
 
 	if not user['type'] == 'customer':
 		raise NotFound()

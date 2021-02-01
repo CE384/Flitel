@@ -301,14 +301,6 @@ def cancel(booking_id):
 		connection = psycopg2.connect(**params)
 		with connection.cursor() as cursor:
 
-			query = f""" delete from room_booking 
-			where id={booking_id};"""
-			cursor.execute(query)
-
-			query = f""" delete from flight_booking 
-			where id={booking_id};"""
-			cursor.execute(query)
-
 			query = f""" update booking SET status_ = 'cancelled'
 			where id={booking_id};"""
 
