@@ -145,6 +145,10 @@ insert into room values (10, 4, '2 beds', '3', '200');
 insert into room values (10, 5, 'suite', '5', '400');
 insert into room values (10, 6, 'suite', '5', '400');
 
+insert into flight values (13, 3, 'economy', 100, 200, 1, 1, 5, 1, '2021-02-25', '12:00:00'); -- tehran-london
+insert into flight values (15, 3, 'economy', 100, 200, 3, 1, 5, 2, '2021-02-24', '13:00:00'); -- washington-manchester
+insert into flight values (16, 3, 'economy', 100, 200, 5, 1, 5, 2, '2021-02-25', '15:00:00'); -- london- manchester
+
 insert into flight values (13, 1, 'economy', 100, 100, 1, 1, 1, 2, '2021-01-08', '14:00:00'); -- tehran-mashhad
 insert into flight values (13, 2, 'economy', 100, 200, 1, 1, 5, 1, '2021-01-09', '15:00:00'); -- tehran-london
 insert into flight values (14, 1, 'economy', 100, 100, 2, 1, 1, 1, '2021-01-08', '14:00:00'); -- istabbul-tehran
