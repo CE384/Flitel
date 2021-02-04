@@ -1,8 +1,7 @@
+# Flight-Hotel Reservation System
+## [Demo](http://flitel.herokuapp.com)
 
-# Airline-Hotel Reservation System
-## [View site online](http://flitel.herokuapp.com)
-
-Implementation of an Airline-Hotel Reservation System using Flask and PostgreSQL.
+Implementation of a Flight-Hotel Reservation System using Flask and PostgreSQL.
 
 Database Course Final Project 
 
